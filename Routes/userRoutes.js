@@ -18,8 +18,12 @@ userRouter.post("/register", async (req, res) => {
 
 userRouter.post("/login", async (req, res) => {
   const { email, pass } = req.body;
-  const result = await userModel.findOne({ email, pass });
+  const result = await userModel.findOne({ email });
   if (!result) return res.json({ message: "Invalid user or password" });
+  const matchPassword = await bcrypt.compare(pass, result.pass);
+  if(!matchPassword){
+    return res.status(400).json({message:"Invaild Password"});
+  }
   const token =jwt.sign({email: result.email,id: result._id},SECRET_KEY);
   return res.json({user: result,token:token});
   console.log(result)
