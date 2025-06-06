@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "corps": "^0.1.0"
+    "corps": "^0.1.0",
+    "mongoose": "^8.15.1"
   }
 }
